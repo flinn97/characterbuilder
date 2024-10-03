@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import { Component } from 'react';
+import { barracksInterface } from './myComponents';
+import CharacterList from './characterList';
+import AddCharacter from './addCharacter';
+import AddCharacterPopup from './addCharacterPopup';
+class App extends Component {
+  constructor(){
+    super()
+    let barracks = barracksInterface.createBarracks()
+    this.dispatch = this.dispatch.bind(this)
+    this.state={
+      barracks:barracks,
+      popupSwitch: "",
+      currentCharacter:undefined,
+    }
+  }
+   
+  dispatch(json){
+      this.setState({json})
+  }
+  render(){
+    let app={ state:this.state, dispatch:this.dispatch}
+
+    
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+    hi
+    <CharacterList app={app}/>
+    <AddCharacter app={app}/>
+    {this.state.popupSwitch === "addCharacter" && <AddCharacterPopup app={app}/>}
     </div>
   );
+}
 }
 
 export default App;
